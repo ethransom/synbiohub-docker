@@ -2,6 +2,7 @@
 
 copy_default() {
     if [ ! -f $1 ]; then
+        echo Copying default file: $1
         cp -f /opt/defaults$1 $1
     fi
 }
