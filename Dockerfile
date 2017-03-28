@@ -37,7 +37,7 @@ RUN useradd ubuntu -p ubuntu -m -s /bin/bash
 
 RUN apt install -y git
 
-RUN cd /opt && git clone https://github.com/ICO2S/synbiohub.git --depth 1 --branch master
+RUN cd /opt && git clone https://github.com/ICO2S/synbiohub.git --depth 1 --branch v0.9.0
 RUN chown -R ubuntu:ubuntu /opt/synbiohub
 
 # to build libxmljs
