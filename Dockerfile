@@ -35,6 +35,7 @@ RUN useradd ubuntu -p ubuntu -m -s /bin/bash && \
     cd /opt && \
     git clone https://github.com/ICO2S/synbiohub.git --depth 1 --branch v0.9.0 && \
     rm -f /opt/synbiohub/config.local.json && \
+    rm -rf /opt/synbiohub/backup && \
     chown -R ubuntu:ubuntu /opt/synbiohub && \
     su ubuntu -c "cd /opt/synbiohub/java && mvn compile"
 
@@ -47,14 +48,16 @@ RUN apt install -y python && \
 RUN apt install -y raptor2-utils
 
 RUN mkdir /mnt/data && \
-    mkdir /mnt/config
+    mkdir /mnt/config && \
+    mkdir /mnt/data/backup
 
 ADD config.local.json /mnt/config/
 ADD virtuoso.ini /mnt/config/
 
 RUN ln -s /mnt/data/synbiohub.sqlite /opt/synbiohub/synbiohub.sqlite && \
     ln -s /mnt/config/virtuoso.ini /etc/virtuoso-opensource-7/virtuoso.ini && \
-    ln -s /mnt/config/config.local.json /opt/synbiohub/config.local.json
+    ln -s /mnt/config/config.local.json /opt/synbiohub/config.local.json && \
+    ln -s /mnt/data/backup /opt/synbiohub/backup
 
 RUN chown -R ubuntu:ubuntu /mnt
 
