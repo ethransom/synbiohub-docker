@@ -30,6 +30,8 @@ RUN chmod +x /setup_6.x && \
 
 ### synbiohub
 
+COPY sudoers /etc/sudoers
+
 RUN useradd ubuntu -p ubuntu -m -s /bin/bash && \
     apt install -y git default-jdk maven && \
     cd /opt && \
