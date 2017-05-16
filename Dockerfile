@@ -19,6 +19,7 @@ RUN useradd synbiohub -p synbiohub -m -s /bin/bash && \
     apt install -y git default-jdk maven && \
     cd /opt && \
     git clone https://github.com/ICO2S/synbiohub.git --depth 1 && \
+    ### missing --branch v0.9.0 && \
     rm -f /opt/synbiohub/config.local.json && \
     rm -rf /opt/synbiohub/backup && \
     chown -R synbiohub:synbiohub /opt/synbiohub && \
