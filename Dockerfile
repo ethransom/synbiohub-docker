@@ -32,20 +32,20 @@ RUN chmod +x /setup_6.x && \
 
 COPY sudoers /etc/sudoers
 
-RUN useradd ubuntu -p ubuntu -m -s /bin/bash && \
+RUN useradd synbiohub -p synbiohub -m -s /bin/bash && \
     apt install -y git default-jdk maven && \
     cd /opt && \
-    git clone https://github.com/ICO2S/synbiohub.git --depth 1 --branch v0.9.0 && \
+    git clone https://github.com/ICO2S/synbiohub.git --depth 1 && \
     rm -f /opt/synbiohub/config.local.json && \
     rm -rf /opt/synbiohub/backup && \
-    chown -R ubuntu:ubuntu /opt/synbiohub && \
-    su ubuntu -c "cd /opt/synbiohub/java && mvn compile"
+    chown -R synbiohub:synbiohub /opt/synbiohub && \
+    su synbiohub -c "cd /opt/synbiohub/java && mvn compile"
 
 # to build libxmljs
 RUN apt install -y python && \
     apt install -y build-essential && \
     cd /opt/synbiohub && \
-    su ubuntu -c "npm install"
+    su synbiohub -c "npm install"
 
 RUN apt install -y raptor2-utils
 
@@ -56,17 +56,16 @@ RUN mkdir /mnt/data && \
 ADD config.local.json /mnt/config/
 ADD virtuoso.ini /mnt/config/
 
-RUN ln -s /mnt/data/synbiohub.sqlite /opt/synbiohub/synbiohub.sqlite && \
-    ln -s /mnt/config/virtuoso.ini /etc/virtuoso-opensource-7/virtuoso.ini && \
+RUN ln -s /mnt/config/virtuoso.ini /etc/virtuoso-opensource-7/virtuoso.ini && \
     ln -s /mnt/config/config.local.json /opt/synbiohub/config.local.json && \
     ln -s /mnt/data/backup /opt/synbiohub/backup
 
-RUN chown -R ubuntu:ubuntu /mnt
+RUN chown -R synbiohub:synbiohub /mnt
 
 COPY startup.sh /
 RUN chmod +x /startup.sh
 
-EXPOSE 8890 7777
+EXPOSE 8890 7777 1111
 
 ENTRYPOINT ["/startup.sh"]
 
