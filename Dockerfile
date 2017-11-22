@@ -24,7 +24,7 @@ RUN chmod +x /setup_6.x && \
     sync && \
     /setup_6.x && \
     apt-get update && \
-    apt-get install nodejs && \
+    apt-get install -y nodejs && \
     npm install -g forever
 
 
